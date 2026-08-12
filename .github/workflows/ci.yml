@@ -1,0 +1,29 @@
+name: CI do Sistema Clínico
+
+# 1. Quando essa esteira deve rodar?
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  testar-codigo:
+    # 2. Qual máquina virtual o GitHub deve provisionar para nós?
+    runs-on: ubuntu-latest
+
+    steps:
+    # 3. Baixar o seu código do repositório para dentro da máquina virtual
+    - name: Checkout do repositório
+      uses: actions/checkout@v3
+
+    # 4. Instalar o Python na máquina virtual
+    - name: Configurar o Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    # 5. Instalar as dependências e rodar o nosso teste
+    - name: Instalar Django e rodar testes
+      run: |
+        pip install django
+        cd clinicDataViewer
+        python manage.py test
