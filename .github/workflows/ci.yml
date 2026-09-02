@@ -10,6 +10,21 @@ jobs:
     # 2. Qual máquina virtual o GitHub deve provisionar para nós?
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: clinicdb
+          POSTGRES_USER: tpassos
+          POSTGRES_PASSWORD: ${{ secretes.DB_PASSWORD }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     # 3. Baixar o seu código do repositório para dentro da máquina virtual
     - name: Checkout do repositório
@@ -23,6 +38,8 @@ jobs:
 
     # 5. Instalar as dependências e rodar o nosso teste
     - name: Instalar Django e rodar testes
+      env:
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
         pip install "psycopg[binary]" django
         cd clinicDataViewer
