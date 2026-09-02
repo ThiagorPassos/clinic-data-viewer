@@ -16,7 +16,7 @@ jobs:
         env:
           POSTGRES_DB: clinicdb
           POSTGRES_USER: tpassos
-          POSTGRES_PASSWORD: ${{ secretes.DB_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
