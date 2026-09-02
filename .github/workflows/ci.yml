@@ -25,5 +25,5 @@ jobs:
     - name: Instalar Django e rodar testes
       run: |
         pip install "psycopg[binary]" django
-	cd clinicDataViewer
+        cd clinicDataViewer
         python manage.py test
