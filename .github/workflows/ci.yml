@@ -44,3 +44,20 @@ jobs:
         pip install "psycopg[binary]" django
         cd clinicDataViewer
         python manage.py test
+
+    # 6. Deploy simulado após sucesso nos testes
+  deploy:
+    needs: testar-codigo
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do repositório
+      uses: actions/checkout@v3
+
+    - name: Simulação de Deploy (Entrega Contínua)
+      run: |
+        echo "Validando os artefatos para a Entrega Contínua..."
+        echo "Em um ambiente real de nuvem, o GitHub acessaria o servidor via SSH aqui."
+        echo "Verificando se o script de deploy automatizado está presente:"
+        ls -la deploy.sh
+        echo "Deploy contínuo homologado com sucesso!"

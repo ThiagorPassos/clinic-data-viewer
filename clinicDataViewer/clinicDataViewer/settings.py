@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'clinicdb',
         'USER': 'tpassos',
         'PASSWORD': 'rootpassword',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
