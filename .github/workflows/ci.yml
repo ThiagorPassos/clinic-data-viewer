@@ -40,6 +40,7 @@ jobs:
     - name: Instalar Django e rodar testes
       env:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_HOST: localhost
       run: |
         pip install "psycopg[binary]" django
         cd clinicDataViewer
