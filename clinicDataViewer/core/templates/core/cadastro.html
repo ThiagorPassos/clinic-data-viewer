@@ -1,0 +1,11 @@
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="username" placeholder="Nome de usuário" required>
+    <input type="password" name="password1" placeholder="Senha" required>
+    <input type="password" name="password2" placeholder="Confirme a senha" required>
+
+    <button type="submit">Criar Conta</button>
+</form>
+
+{{ form.errors }}

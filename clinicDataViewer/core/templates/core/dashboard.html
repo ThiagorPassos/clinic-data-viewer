@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Clinic Data Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Painel do Usuário</h1>
+
+        {% if perfil %}
+            <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+                <h3>Seu Perfil Clínico</h3>
+                <p><strong>Nome:</strong> {{ perfil.full_name }}</p>
+                <p><strong>Tipo Sanguíneo:</strong> {{ perfil.blood_type }}</p>
+                <p><strong>Telefone de Emergência:</strong> {{ perfil.emergency_phone }}</p>
+
+                {% if qr_code %}
+                    <div>
+                        <h4>Seu QR Code de Emergência:</h4>
+                        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code de Emergência" style="width: 200px; height: 200px;">
+                    </div>
+                {% endif %}
+            </div>
+            <a href="{% url 'formulario_clinico' %}">Editar Perfil Clínico</a>
+        {% else %}
+            <p>Você ainda não preencheu seus dados clínicos.</p>
+            <a href="{% url 'formulario_clinico' %}">Cadastrar Perfil Clínico Agora</a>
+        {% endif %}
+
+        <br><br>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Sair (Logout)</button>
+        </form>
+    </div>
+</body>
+</html>

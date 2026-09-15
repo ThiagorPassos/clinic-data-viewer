@@ -1,0 +1,6 @@
+<h2>Preencha seus Dados Médicos</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar Perfil Clínico</button>
+</form>
