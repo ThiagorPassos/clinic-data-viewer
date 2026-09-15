@@ -1,18 +1,27 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+
 from .models import ClinicalProfile
 from .forms import ClinicalProfileForm
 import qrcode
 import base64
 from io import BytesIO
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+
+
+from django.contrib import messages
 
 @login_required
 def dashboard_view(request):
     perfil = ClinicalProfile.objects.filter(user=request.user).first()
+
+    if not perfil:
+            return redirect('formulario_clinico')
+
     qr_code_base64 = None
 
     if perfil:
@@ -31,17 +40,17 @@ def dashboard_view(request):
         'qr_code': qr_code_base64
     })
 
-def cadastro_view(request):
+def cadastro_usuario_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard')
+            return redirect('formulario_clinico')
     else:
         form = UserCreationForm()
 
-    return render(request, 'core/cadastro.html', {'form': form})
+    return render(request, 'core/cadastro_usuario.html', {'form': form})
 
 @login_required
 def formulario_clinico_view(request):
@@ -58,3 +67,24 @@ def formulario_clinico_view(request):
         form = ClinicalProfileForm(instance=perfil)
 
     return render(request, 'core/formulario_clinico.html', {'form': form})
+
+def emergencia_view(request, perfil_id):
+    perfil = get_object_or_404(ClinicalProfile, id=perfil_id)
+
+    if request.method == 'POST':
+        pin_digitado = request.POST.get('pin')
+        if pin_digitado == perfil.pin_code:
+            return render(request, 'core/emergencia_dados.html', {'perfil': perfil})
+        else:
+            erro = "PIN incorreto. Tente novamente."
+            return render(request, 'core/emergencia_pin.html', {'perfil': perfil, 'erro': erro})
+
+    return render(request, 'core/emergencia_pin.html', {'perfil': perfil})
+
+@login_required
+def excluir_conta_view(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        return redirect('login')
+    return redirect('dashboard')

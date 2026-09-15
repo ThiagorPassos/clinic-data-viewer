@@ -1,6 +1,41 @@
-<h2>Preencha seus Dados Médicos</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar Perfil Clínico</button>
-</form>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário Clínico - Clinic Data Viewer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+    <style>
+        form p { margin-bottom: 1.2rem; font-weight: 500; }
+        form input, form select, form textarea {
+            display: block; width: 100%; padding: 0.5rem;
+            border: 1px solid #bdbdbd; border-radius: 0.25rem;
+            font-weight: normal;
+        }
+        form .helptext { font-size: 0.8em; color: #757575; font-weight: normal; display: block; }
+    </style>
+</head>
+<body class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-3">
+                    <div class="card-header bg-primary text-white text-center py-3">
+                        <h4 class="mb-0">Seus Dados Médicos</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Salvar Perfil Clínico</button>
+                                <a href="{% url 'dashboard' %}" class="btn btn-light">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -13,6 +13,7 @@ class ClinicalProfile(models.Model):
     illnesses = models.TextField(blank=True, null=True)
     surgeries = models.TextField(blank=True, null=True)
     pin_code = models.CharField(max_length=4)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return f"Perfil Clínico - {self.user.username}"

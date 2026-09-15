@@ -1,10 +1,41 @@
-<form method="POST">
-    {% csrf_token %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Clinic Data Viewer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="card shadow-5-strong" style="width: 25rem;">
+        <div class="card-body text-center p-5">
+            <h4 class="card-title mb-4">Acesso ao Sistema</h4>
 
-    <input type="text" name="username" placeholder="Nome de usuário" required>
-    <input type="password" name="password" placeholder="Senha" required>
+            <form method="POST">
+                {% csrf_token %}
 
-    <button type="submit">Entrar</button>
-</form>
+                <div class="form-outline mb-4">
+                    <input type="text" id="username" name="username" class="form-control form-control-lg" required />
+                    <label class="form-label" for="username">Nome de usuário</label>
+                </div>
 
-{{ form.errors }}
+                <div class="form-outline mb-4">
+                    <input type="password" id="password" name="password" class="form-control form-control-lg" required />
+                    <label class="form-label" for="password">Senha</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg mb-3">Entrar</button>
+            </form>
+
+            {% if form.errors %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    Usuário ou senha inválidos.
+                </div>
+            {% endif %}
+
+            <hr>
+            <p class="mb-0">Não tem uma conta? <a href="{% url 'cadastro_usuario' %}">Cadastre-se aqui</a></p>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+</body>
+</html>

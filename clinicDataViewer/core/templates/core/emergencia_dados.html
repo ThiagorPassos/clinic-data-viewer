@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dados Clínicos de Emergência</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light pt-5 pb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-3 border-danger border-top border-5">
+                    <div class="card-header bg-white text-danger text-center py-4">
+                        <h3 class="mb-0 fw-bold">FICHA MÉDICA DE EMERGÊNCIA</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <h2 class="mb-4 border-bottom pb-2">{{ perfil.full_name }}</h2>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-4 text-muted text-uppercase fw-bold">Tipo Sanguíneo:</div>
+                            <div class="col-sm-8 fw-bold fs-4 text-danger">{{ perfil.blood_type }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-4 text-muted text-uppercase fw-bold">Contato (Emergência):</div>
+                            <div class="col-sm-8 fw-bold fs-5">{{ perfil.emergency_phone }}</div>
+                        </div>
+
+                        <div class="p-3 bg-light rounded mt-4 mb-4">
+                            <div class="row mb-3">
+                                <div class="col-sm-4 text-danger text-uppercase fw-bold">Alergias:</div>
+                                <div class="col-sm-8 fw-bold text-dark">{{ perfil.allergies|default:"Nenhuma informada" }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4 text-danger text-uppercase fw-bold">Doenças Crônicas:</div>
+                                <div class="col-sm-8 fw-bold text-dark">{{ perfil.illnesses|default:"Nenhuma informada" }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4 text-primary text-uppercase fw-bold">Medicamentos:</div>
+                                <div class="col-sm-8 fw-bold text-dark">{{ perfil.medicines|default:"Nenhum informado" }}</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-4 text-primary text-uppercase fw-bold">Cirurgias:</div>
+                                <div class="col-sm-8 fw-bold text-dark">{{ perfil.surgeries|default:"Nenhuma informada" }}</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                            <p class="text-muted small mb-1">Informações fornecidas pelo paciente. Válidas apenas para uso em emergências.</p>
+                            <p class="text-muted small">Atualizado em: {{ perfil.updated_at|date:"d/m/Y H:i" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
