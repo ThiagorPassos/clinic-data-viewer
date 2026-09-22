@@ -42,17 +42,20 @@ jobs:
         python manage.py test
 
   deploy:
-    needs: testar-codigo
-    runs-on: ubuntu-latest
+      needs: testar-codigo
+      runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout do repositório
-      uses: actions/checkout@v3
+      steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
 
-    - name: Simulação de Deploy (Entrega Contínua)
-      run: |
-        echo "Validando os artefatos para a Entrega Contínua..."
-        echo "Em um ambiente real de nuvem, o GitHub acessaria o servidor via SSH aqui."
-        echo "Verificando se o script de deploy automatizado está presente:"
-        ls -la deploy.sh || echo "Script deploy.sh não encontrado, mas CI continua."
-        echo "Deploy contínuo homologado com sucesso!"
+      - name: Executar deploy automatizado no EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/repos/clinic-data-viewer
+            chmod +x deploy.sh
+            ./deploy.sh
